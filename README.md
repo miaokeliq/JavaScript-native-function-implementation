@@ -71,5 +71,18 @@ Foo instanceof Function; // true
 （4）判断函数的返回值类型，如果是值类型，返回创建的对象。如果是引用类型，则返回这个引用类型的对象
 
 ```javascript
-
+// const xxx = _new(Foo, 'haha', 123) ==> new Foo('haha',123)
+function _new(fn) {
+  // 1. 获取除fn以外的所有arguments
+  // 使用slice删除arguments第一个元素就得到其他arguments
+  const args = Array.prototype.slice.call(arguments, 1); // ['haha',123]
+  // 创建一个对象 用于函数变对象
+  const newObj = {};
+  // 原型链被赋值为原型对象
+  newObj.__proto__ = fn.prototype;
+  // this 指向新对象
+  fn.apply(newObj, fn);
+  // 返回这个对象
+  return newObj;
+}
 ```
