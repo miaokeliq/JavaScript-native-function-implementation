@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title></title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="css/style.css" rel="stylesheet" />
+  </head>
+  <body>
+    <script>
+      function new_instance_of(leftValue, rightValue) {
+        let rightProto = rightValue.prototype; // 取右表达式的 prototype 值
+        leftValue = leftValue.__proto__; // 取左表达式的 __proto__ 值
+        while (true) {
+          if (leftValue === null) {
+            return false;
+          }
+          if (leftValue === rightProto) {
+            return true;
+          }
+          leftValue = leftValue.__proto__;
+        }
+      }
+    </script>
+  </body>
+</html>
