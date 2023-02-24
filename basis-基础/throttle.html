@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title></title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="css/style.css" rel="stylesheet" />
+  </head>
+  <body>
+    <script>
+      function coloring() {
+        let r = Math.floor(Math.random() * 255);
+        let g = Math.floor(Math.random() * 255);
+        let b = Math.floor(Math.random() * 255);
+        document.body.style.background = `rgb(${r}, ${g}, ${b})`;
+      }
+
+      function throttle(func, delay) {
+        let pre = 0;
+        return function () {
+          let now = new Date();
+          let context = this;
+          let args = arguments;
+          if (now - pre > delay) {
+            func.apply(context, args);
+            pre = now;
+          }
+        };
+      }
+
+      window.addEventListener("resize", coloring);
+    </script>
+  </body>
+</html>
