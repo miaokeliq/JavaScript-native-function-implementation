@@ -6,6 +6,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
   </head>
   <body>
-    <script></script>
+    <script>
+      // 手写 bind 函数
+      Function.prototype.myBind = function (context) {
+        // 判断调用对象是否为函数
+        if (typeof this !== "function") {
+          console.error("Error");
+        }
+        // 获取参数
+        let args = [...arguments].slice(1);
+        let fn = this;
+        return function Fn() {
+          // 根据调用方式，传入不同绑定值
+          return fn.apply(
+            this instanceof Fn ? this : context,
+            args.concat(...arguments)
+          );
+        };
+      };
+
+      function Person(name, age) {
+        this.name = name;
+        this.age = age;
+        console.log(arguments);
+        console.log(this);
+      }
+      // 举个例子：
+      const context = { city: "Beijing" };
+      const fn = Person.myBind(context, "Alice", 20);
+      fn();
+      console.log(context);
+      /*
+
+
+
+      */
+    </script>
   </body>
 </html>
