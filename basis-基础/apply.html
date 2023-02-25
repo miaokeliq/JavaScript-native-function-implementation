@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title></title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+  <body>
+    <script>
+      // 手写 apply 函数
+      Function.prototype.myApply = function (context) {
+        if (typeof context !== "function") {
+          console.error("Error");
+        }
+        let result = null;
+        // 判断 context 是否存在，如果未传入则为 window
+        context = context || window;
+        // 将函数设为对象的方法
+        context.fn = this;
+        // 调用方法
+        if (arguments[1]) {
+          result = context.fn(...arguments[1]);
+        } else {
+          result = context.fn;
+        }
+
+        // 将属性删除
+        delete context.fn;
+        return result;
+      };
+    </script>
+  </body>
+</html>
