@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title></title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+  <body>
+    <script>
+      const array = [1, 2, 3, 5, 1, 5, 9, 1, 2, 8];
+
+      let res = uniqueArray(array);
+
+      function uniqueArray(arr) {
+        let map = {};
+        let res = [];
+        for (let item of arr) {
+          if (!map.hasOwnProperty(item)) {
+            map[item] = 1;
+            res.push(item);
+          }
+        }
+
+        return res;
+      }
+      console.log(res);
+    </script>
+  </body>
+</html>
