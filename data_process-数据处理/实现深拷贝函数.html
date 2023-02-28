@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title></title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+  <body>
+    <script>
+      // 深拷贝的实现
+      function deepCopy(object) {
+        if (!object || typeof object !== "object") return;
+
+        let newObject = Array.isArray(object) ? [] : {};
+
+        for (let key in object) {
+          if (object.hasOwnProperty(key)) {
+            newObject[key] =
+              typeof object[key] === "object"
+                ? deepCopy(object[key])
+                : object[key];
+          }
+        }
+        return newObject;
+      }
+    </script>
+  </body>
+</html>
