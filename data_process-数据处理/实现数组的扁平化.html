@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title></title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+  <body>
+    <script>
+      /*
+        方法1 : ES6 的 flatj
+      */
+
+      //let arr = [1, [2, [3, 4]]];
+      //function flatten(arr) {
+      //  return arr.flat(Infinity);
+      //}
+      //console.log(flatten(arr)); //
+
+      /*
+        方法2 : split 和 toString()
+      */
+
+      //let arr = [1, [2, [3, 4]]];
+      //function flatten(arr) {
+      //  //return arr.toString(); // 1,2,3,4
+      //  return arr.toString().split(",");
+      //}
+      //console.log(flatten(arr)); //  [1, 2, 3, 4]
+
+      /*
+        方法3 : 扩展运算符 
+      */
+      let arr = [1, [2, [3, 4]]];
+      function flatten(arr) {
+        while (arr.some((item) => Array.isArray(item))) {
+          console.log(...arr);
+          arr = [].concat(...arr);
+        }
+        return arr;
+      }
+      console.log(flatten(arr)); //  [1, 2, 3, 4，5]
+
+      /*
+        方法4 : reduce 函数迭代
+      */
+
+      let arr = [1, [2, [3, 4]]];
+      function flatten(arr) {
+        return arr.reduce(function (prev, next) {
+          return prev.concat(Array.isArray(next) ? flatten(next) : next);
+        }, []);
+      }
+      console.log(flatten(arr)); //  [1, 2, 3, 4]
+    </script>
+  </body>
+</html>
