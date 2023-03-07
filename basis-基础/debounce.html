@@ -28,15 +28,15 @@
         console.log(this);
       }
 
-      container.onmousemove = webounce(getUserAction, 1000);
+      container.onmousemove = debounce(getUserAction, 1000);
 
       function debounce(func, delay) {
         let timer;
         return function () {
           clearTimeout(timer);
-          // console.log("this", this);
+          console.log("this", this);
           let context = this;
-          // console.log("args", arguments);
+          console.log("args", arguments);
           let args = arguments;
           timer = setTimeout(function () {
             // console.log(arguments) // 这个函数没有默认传进来的arguments，因为它并不是被监听事件调用的。

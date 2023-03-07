@@ -9,7 +9,7 @@
     <script>
       // 手写 apply 函数
       Function.prototype.myApply = function (context) {
-        if (typeof context !== "function") {
+        if (typeof this !== "function") {
           console.error("Error");
         }
         let result = null;

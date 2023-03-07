@@ -31,7 +31,7 @@
       /*
         方法3 : 扩展运算符 
       */
-      let arr = [1, [2, [3, 4]]];
+      let arr1 = [1, [2, [3, 4]]];
       function flatten(arr) {
         while (arr.some((item) => Array.isArray(item))) {
           console.log(...arr);
@@ -39,19 +39,19 @@
         }
         return arr;
       }
-      console.log(flatten(arr)); //  [1, 2, 3, 4，5]
+      console.log(flatten(arr1)); //  [1, 2, 3, 4，5]
 
       /*
         方法4 : reduce 函数迭代
       */
 
-      let arr = [1, [2, [3, 4]]];
+      let arr2 = [1, [2, [3, 4]]];
       function flatten(arr) {
         return arr.reduce(function (prev, next) {
           return prev.concat(Array.isArray(next) ? flatten(next) : next);
         }, []);
       }
-      console.log(flatten(arr)); //  [1, 2, 3, 4]
+      console.log(flatten(arr2)); //  [1, 2, 3, 4]
     </script>
   </body>
 </html>
