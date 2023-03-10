@@ -8,8 +8,22 @@
   <body>
     <script>
       function _reverse(a) {
-        return a.split("").reverse().join("");
+        return a.split("").__reverse().join("");
       }
+
+      Array.prototype.__reverse = function () {
+        console.log(this);
+        if (!Array.isArray(this)) {
+          throw Error("参数必须是一个函数");
+        }
+        for (let i = 0, j = this.length - 1; i < j; i++, j--) {
+          [this[i], this[j]] = [this[j], this[i]];
+        }
+        return this;
+      };
+
+      let a = "abcdefg";
+      console.log(_reverse(a)); // gfedcba
     </script>
   </body>
 </html>
