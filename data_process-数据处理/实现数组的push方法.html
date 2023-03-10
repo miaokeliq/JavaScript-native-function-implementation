@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>实现数组的push方法</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+  <body>
+    <script>
+      Array.prototype._push = function (item) {
+        for (let i = 0; i < arguments.length; i++) {
+          this[this.length] = arguments[i];
+        }
+        return this.length;
+      };
+
+      const animals = ["pigs", "goats", "sheep"];
+      let length = animals._push("chickens", "cats", "dogs");
+      console.log(length); // 6
+      console.log(animals); //Array ["pigs", "goats", "sheep", "cows", "chickens", "cats", "dogs"]
+    </script>
+  </body>
+</html>

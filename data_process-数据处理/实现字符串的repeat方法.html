@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>实现字符串的repeat方法</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+  <body>
+    <script>
+      function repeat(s, n) {
+        return new Array(n + 1).join(s);
+      }
+      let str = "abc";
+      let res = repeat(str, 2);
+      console.log(res);
+    </script>
+  </body>
+</html>
