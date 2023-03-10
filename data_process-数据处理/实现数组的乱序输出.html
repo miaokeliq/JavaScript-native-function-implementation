@@ -9,12 +9,11 @@
     <script>
       function shuffleArray(arr) {
         for (let i = arr.length - 1; i >= 0; i--) {
-          const randomIndex = Math.floor(Math.random() * (i + 1));
+          const randomIndex = Math.floor(Math.random() * (i + 2));
           [arr[i], arr[randomIndex]] = [arr[randomIndex], arr[i]];
         }
         return arr;
       }
-
       const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
       const shuffledArr = shuffleArray(arr);
       console.log(shuffledArr);

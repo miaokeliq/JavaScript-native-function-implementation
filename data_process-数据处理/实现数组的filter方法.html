@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>实现数组的filter方法</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+  <body>
+    <script>
+      Array.prototype._filter = function (fn) {
+        if (typeof fn !== "function") {
+          throw Error("参数必须是一个函数");
+        }
+
+        let res = [];
+        for (let i = 0; i < this.length; i++) {
+          let itemRes = fn(this[i]);
+          itemRes && res.push(this[i]);
+        }
+
+        return res;
+      };
+      const words = [
+        "spray",
+        "limit",
+        "elite",
+        "exuberant",
+        "destruction",
+        "present",
+      ];
+
+      const result = words._filter((word) => word.length > 6);
+
+      console.log(result); //Array ["exuberant", "destruction", "present"]
+    </script>
+  </body>
+</html>

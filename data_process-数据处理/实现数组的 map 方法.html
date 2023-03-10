@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>实现数组的 map 方法</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+  <body>
+    <script>
+      Array.prototype._map = function (fn) {
+        if (typeof fn !== "function") {
+          throw Error("参数必须是一个函数");
+        }
+
+        let res = [];
+        for (let i = 0; i < this.length; i++) {
+          res.push(fn(this[i]));
+        }
+
+        return res;
+      };
+
+      let arr = [1, 2, 3, 4, 5, 6];
+
+      let arr1 = arr._map((item) => {
+        return item + 1;
+      });
+      console.log(arr1);
+    </script>
+  </body>
+</html>
