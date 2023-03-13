@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <body>
+    <script>
+     
+      function promiseAll(promises){
+          
+        return new Promise((resolve, reject)=>{
+          if(!Array.isArray(promises)){
+              throw new TypeError("argument must be a array")
+          }
+          let resolvedCounter = 0   
+          let promiseNum = promises.length 
+          let resolvedResult = []
+          for(let i = 0; i < promiseNum; i++){
+            Promise.resolve(promises[i]).then((res)=>{
+                resolvedCounter++
+                resolvedResult[i] = res
+              if(resolvedCounter === promiseNum){
+                resolve(resolvedResult)
+              }
+            }, (error)=>{
+                return reject(error)
+              })
+          }
+        })
+      }
+
+// test
+let p1 = new Promise(function (resolve, reject) {
+    setTimeout(function () {
+        resolve(1)
+    }, 1000)
+})
+let p2 = new Promise(function (resolve, reject) {
+    setTimeout(function () {
+        resolve(2)
+    }, 2000)
+})
+let p3 = new Promise(function (resolve, reject) {
+    setTimeout(function () {
+        resolve(3)
+    }, 3000)
+})
+promiseAll([p3, p1, p2]).then(res => {
+    console.log(res) // [3, 1, 2]
+})
+
+
+
+    </script> 
+  </body>
+</html>

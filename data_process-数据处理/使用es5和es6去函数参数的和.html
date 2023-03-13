@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title></title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+  <body>
+    <script>
+      // es5
+      function sum() {
+        let sum = 0;
+        Array.prototype.forEach.call(arguments, function (item) {
+          sum += item * 1; // *1 是为了将item强制转换为 number 类型
+        });
+        return sum;
+      }
+
+      // es6
+      function sum(...nums) {
+        let sum = 0;
+        nums.forEach((item) => {
+          sum += item * 1;
+        });
+
+        return sum;
+      }
+
+      console.log(sum(1, 2, 3, 4, 5, 6));
+    </script>
+  </body>
+</html>
