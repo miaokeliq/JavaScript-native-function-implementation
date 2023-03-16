@@ -34,13 +34,14 @@
         let timer;
         return function () {
           clearTimeout(timer);
-          console.log("this", this);
           let context = this;
-          console.log("args", arguments);
+          // arguments 是类数组对象
           let args = arguments;
           timer = setTimeout(function () {
             // console.log(arguments) // 这个函数没有默认传进来的arguments，因为它并不是被监听事件调用的。
             // console.log(this); // this指向windows
+            // apply 后面跟一个数组 或者是 类数组对象
+
             func.apply(context, args);
           }, delay);
         };

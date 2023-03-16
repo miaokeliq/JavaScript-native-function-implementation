@@ -21,7 +21,7 @@
                 resolvedCounter++
                 resolvedResult[i] = res
               if(resolvedCounter === promiseNum){
-                resolve(resolvedResult)
+                return resolve(resolvedResult)
               }
             }, (error)=>{
                 return reject(error)
