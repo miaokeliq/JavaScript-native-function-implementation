@@ -8,16 +8,94 @@
   <body>
     <script>
       // 1. 先写出基本结构
-      function myPromise() {
+      function myPromise(excutor) {
+        // 4. 添加一个执行器
         let self = this;
         self.status = "pending"; // 初始状态 -> 等待
-        self.value = null; // 接收成功的值
-        self.reason = null; // 接收失败的值
+        self.value = null; // 成功的结果
+        self.reason = null; // 失败的理由
 
-        function resolve() {}
+        // 7. 利用发布订阅模式解决异步问题
+        // 新增两个容器，用来存储
+        self.onFulfilledCallbacks = [];
+        self.onRejectedCallbacks = [];
 
-        function reject() {}
+        // 成功的方法
+        function resolve(value) {
+          // 5. 状态判断
+          if (self.status === "pending") {
+            self.value = value;
+            self.status = "fulfilled";
+            // 发布订阅模式里的发布
+            // 状态改变的时候再调
+            self.onFulfilledCallbacks.forEach((item) => item(value));
+          }
+        }
+
+        // 失败的方法
+        function reject(reason) {
+          if (self.status === "pending") {
+            self.reason = reason;
+            self.status = "rejected";
+            // 发布订阅模式里的发布
+            // 状态改变的时候再调
+            self.onRejectedCallbacks.forEach((item) => item(reason));
+          }
+        }
+
+        // 4. 实例化之后立即执行一次
+        try {
+          // 正常执行的代码
+          excutor(resolve, reject);
+        } catch (err) {
+          // 处理问题的代码
+          reject(err);
+        }
       }
+
+      // 2. then() 添加
+
+      myPromise.prototype.then = function (onFulfilled, onRejected) {
+        // 6. 状态改变，调用.then()
+        onFulfilled =
+          typeof onFulfilled === "function"
+            ? onFulfilled
+            : function (data) {
+                resolve(data);
+              }; // 如果不是，就自己定义一个方法
+        onRejected =
+          typeof onRejected === "function"
+            ? onRejected
+            : function (err) {
+                throw err;
+              };
+
+        console.log(this.status); // pending
+        // 发布订阅模式
+
+        let self = this;
+        // 订阅
+        // 当状态还是pending的时候，就把对应的callback先存起来
+        if (self.status === "pending") {
+          self.onFulfilledCallbacks.push(onFulfilled);
+          self.onRejectedCallbacks.push(onRejected);
+        }
+      };
+
+      myPromise.prototype.catch = function (fn) {
+        return this.then(null, fn);
+      };
+
+      // 3. 测试
+      let demo = new myPromise((resolve, reject) => {
+        console.log("potato");
+        setTimeout(() => {
+          resolve(123);
+        }, 1000);
+      });
+
+      //new myPromise 后的参数就是传入 excutor 执行器
+      demo.then((data) => console.log(data));
     </script>
   </body>
 </html>
