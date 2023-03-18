@@ -63,6 +63,7 @@
             : function (data) {
                 resolve(data);
               }; // 如果不是，就自己定义一个方法
+
         onRejected =
           typeof onRejected === "function"
             ? onRejected
@@ -70,15 +71,49 @@
                 throw err;
               };
 
-        console.log(this.status); // pending
         // 发布订阅模式
 
         let self = this;
         // 订阅
         // 当状态还是pending的时候，就把对应的callback先存起来
+        //if (self.status === "pending") {
+        // self.onFulfilledCallbacks.push(onFulfilled);
+        // self.onRejectedCallbacks.push(onRejected);
+        // }
+        if (self.status === "fulfilled") {
+          return new myPromise((resolve, reject) => {
+            try {
+              let x = onFulfilled(self.value);
+              x instanceof myPromise ? x.then(resolve, reject) : resolve(x);
+            } catch (err) {
+              reject(err);
+            }
+          });
+        }
+
+        if (self.status === "rejected") {
+          return new myPromise((resolve, reject) => {
+            try {
+              let x = onRejected(self.reason);
+              x instanceof myPromise ? x.then(resolve, reject) : resolve(x);
+            } catch (err) {
+              reject(err);
+            }
+          });
+        }
+
         if (self.status === "pending") {
-          self.onFulfilledCallbacks.push(onFulfilled);
-          self.onRejectedCallbacks.push(onRejected);
+          return new myPromise((resolve, reject) => {
+            self.onFulfilledCallbacks.push(() => {
+              let x = onFulfilled(self.value);
+              x instanceof myPromise ? x.then(resolve, reject) : resolve(x);
+            });
+            self.onRejectedCallbacks.push(() => {
+              let x = onRejected(self.reason);
+              console.log(x);
+              x instanceof myPromise ? x.then(resolve, reject) : resolve(x);
+            });
+          });
         }
       };
 
@@ -86,16 +121,16 @@
         return this.then(null, fn);
       };
 
-      // 3. 测试
-      let demo = new myPromise((resolve, reject) => {
-        console.log("potato");
+      var p = new myPromise((resolve, reject) => {
         setTimeout(() => {
-          resolve(123);
+          reject("2222");
         }, 1000);
       });
-
-      //new myPromise 后的参数就是传入 excutor 执行器
-      demo.then((data) => console.log(data));
+      p.then((res) => {
+        console.log("success", res);
+      }).catch((err) => {
+        console.log("catch", err);
+      });
     </script>
   </body>
 </html>
