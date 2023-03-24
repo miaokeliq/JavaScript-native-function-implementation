@@ -5,5 +5,23 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
   </head>
-  <body></body>
+  <body>
+    <script>
+      var a = Object.prototype.toString;
+
+      console.log(a.call(2));
+      console.log(a.call(true));
+      console.log(a.call("str"));
+      console.log(a.call([]));
+      console.log(a.call(function () {}));
+      console.log(a.call({}));
+      console.log(a.call(undefined));
+      console.log(a.call(null));
+
+      let n1 = 0.1,
+        n2 = 0.2;
+      console.log(n1 + n2);
+      console.log((n1 + n2).toFixed(1));
+    </script>
+  </body>
 </html>
