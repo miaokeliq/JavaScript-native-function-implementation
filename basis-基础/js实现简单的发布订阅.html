@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title></title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+  <body>
+    <script>
+      const Event = {
+        _listener: [],
+        emit(name, data) {
+          this._listener.forEach((v) => {
+            v.name === name && v.callback(data);
+          });
+        },
+        on(name, callback) {
+          this._listener.push({ name, callback });
+        },
+        off(name, fn) {
+          this._listener = this._listener.filter((v) => {
+            return !((v.name === name && fn === v.callback) || fn);
+          });
+        },
+      };
+
+      const fn = function (data) {
+        console.log(data);
+      };
+
+      Event.on("run", fn);
+      Event.on("run", () => {
+        console.log(22);
+      });
+
+      Event.emit("run", { a: 1 });
+    </script>
+  </body>
+</html>

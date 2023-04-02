@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function dateFormat(dateInput, format) {
+        let day = dateInput.getDate();
+        let month = dateInput.getMonth() + 1;
+        let year = dateInput.getFullYear();
+        format = format.replace(/yyyy/, year);
+        format = format.replace(/dd/, day);
+        format = format.replace(/MM/, month);
+        return format;
+      }
+      console.log(dateFormat(new Date("2020-12-01"), "yyyy/MM/dd")); // 2020/12/01
+      console.log(dateFormat(new Date("2020-04-01"), "yyyy/MM/dd")); // 2020/04/01
+      console.log(dateFormat(new Date("2020-04-01"), "yyyy年MM月dd日")); // 2020年04月01日
+    </script>
+  </body>
+</html>
