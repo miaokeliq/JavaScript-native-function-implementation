@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function parseUrl(url) {
+        // 1. 获取 ？ 后的字符串信息
+        const [, search] = url.split("?");
+
+        console.log(search);
+        // 2. 通过 & 切割字符串，得到一个数组
+        const array = search.split("&");
+
+        // 3. 处理数组
+        return array.reduce((accu, str) => {
+          if (str.includes("=")) {
+            let [key, value] = str.split("=");
+
+            value = decodeURIComponent(value); // 中文解码
+            // 尝试转为数字
+            value = /^\d+$/.test(value) ? +value : value; // 如果全是数字，则转换，如果没通过就代表有字符，就不操作
+            if (accu.hasOwnProperty(key)) {
+              // 表明这个 key 出现过，需要把其转为一个数组形式j
+              accu[key] = [].concat(accu[key], value);
+            } else {
+              accu[key] = value;
+            }
+          } else {
+            // str 中不包含等号，直接赋值为true
+            accu[str] = true;
+          }
+
+          return accu;
+        }, {});
+        // 4. 返回一个对象
+      }
+      let str = "https://www.meituan.com/index.html?a=test&b=2.1a&c=abs&d=123";
+      console.log("res ", parseUrl(str));
+    </script>
+  </body>
+</html>
